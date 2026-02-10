@@ -2,7 +2,7 @@ function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  fetch("https://online-certificate-backend.onrender.com/api/auth/login", {
+  fetch("https://online-ceritification-verification.onrender.com/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -27,7 +27,7 @@ function Register(){
     const password = document.getElementById("password").value;
 
     
-    fetch("https://online-certificate-backend.onrender.com/api/auth/register",{
+    fetch("https://online-ceritification-verification.onrender.com//api/auth/register",{
         method : "POST",
         headers: {
             "content-type": "application/json"

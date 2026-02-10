@@ -9,25 +9,38 @@ function login() {
     },
     body: JSON.stringify({ email, password })
   })
-  .then(res => res.json())
-  .then(data => {
+  .then(async res => {
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      throw new Error("Server did not return JSON");
+    }
+
+    if (!res.ok) {
+      alert(data.message || "Login failed");
+      return;
+    }
+
     if (data.token) {
       localStorage.setItem("token", data.token);
       alert("Login successful");
-      window.location.href = "admin.html"
-    } else {
-      alert(data.message || "Login failed");
+      window.location.href = "admin.html";
     }
   })
-  .catch(err => alert("Error connecting to server"));
+  .catch(err => {
+    console.error(err);
+    alert("Error connecting to server");
+  });
 }
+
 function Register(){
       const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
     
-    fetch("https://online-ceritification-verification.onrender.com//api/auth/register",{
+    fetch("https://online-ceritification-verification.onrender.com/api/auth/register",{
         method : "POST",
         headers: {
             "content-type": "application/json"

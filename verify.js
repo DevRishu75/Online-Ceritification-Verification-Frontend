@@ -18,7 +18,7 @@ function Verify() {
         return;
     }
 
-    fetch(`http://localhost:5000/api/certificates/verify/${CertifyID}`)
+    fetch(`https://online-certificate-backend.onrender.com/api/certificates/verify/${CertifyID}`)
         .then(res => {
             if (!res.ok) throw new Error("Invalid certificate");
             return res.json();

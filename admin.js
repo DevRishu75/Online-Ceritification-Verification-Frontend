@@ -6,7 +6,7 @@ if(!token){
 }
 function CreateCourse(){
     const title = document.getElementById("course").value;
-    fetch("http://localhost:5000/api/courses",{
+    fetch("https://online-certificate-backend.onrender.com/api/courses",{
         method: "POST",
         headers: {
             "Content-type":"application/json",
@@ -28,8 +28,7 @@ function CreateCourse(){
 function issueCertificate(){
     const name = document.getElementById('student-name').value;
     const CourseId = document.getElementById("Course-ID").value;
-
-    fetch(`http://localhost:5000/api/certificates/issue/${CourseId}`, {
+    fetch(`https://online-certificate-backend.onrender.com/api/certificates/issue/${CourseId}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -47,8 +46,6 @@ function issueCertificate(){
         console.log("FULL RESPONSE:", data);
         const certID =  data.certificate.certificateId;
         const verifyLink = `verify.html?cid=${certID}`;
-         
-
         document.getElementById("output").innerHTML =
             `Certificate issued successfully : Certificate Id = ${data.certificate.certificateId}
              <a href="${verifyLink}" target="_blank">

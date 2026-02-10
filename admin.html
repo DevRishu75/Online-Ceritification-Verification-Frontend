@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Admin Dashboard</h2>
+    <!-- create course -->
+     <input type="text" id="course" placeholder="Enter course name">
+     <br><br>
+     <button onclick="CreateCourse()">Create Course</button>
+
+     <hr>
+     <!-- issue certificate
+       -->
+     <input type="text" id="student-name" placeholder="Enter Name">
+     <br>
+     <input type="text" id="Course-ID" placeholder="Enter Course Id">
+     <br>
+     <button onclick="issueCertificate()">Issue Certificate</button>
+    <hr>
+    <p id="output"></p>
+    <script src="admin.js"></script>
+</body>
+</html>

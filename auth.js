@@ -35,14 +35,7 @@ function login() {
 }
 
 function Register() {
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  if (!name || !email || !password) {
-    alert("Please fill all fields.");
-    return;
-  }
+  // ... (previous code) ...
 
   fetch("https://online-ceritification-verification.onrender.com/api/auth/register", {
     method: "POST",
@@ -52,20 +45,36 @@ function Register() {
     body: JSON.stringify({ name, email, password })
   })
   .then(async res => {
-    // parse JSON safely
-    let data;
-    try {
-      data = await res.json();
-    } catch (err) {
-      throw new Error("Invalid server response, please try again later.");
+    // Check if the response has content before trying to parse JSON
+    if (res.status === 200) { // Or specifically check res.ok
+        const contentType = res.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+            // Only try to parse JSON if content type says it's JSON
+            try {
+                return await res.json();
+            } catch (err) {
+                // If parsing fails for a non-empty JSON response, it's an invalid response
+                throw new Error("Invalid JSON response from server.");
+            }
+        } else {
+            // If it's 200 OK but no JSON, assume success and return a default success object
+            // This caters to your current server behavior (200 OK, empty body)
+            return { message: "Registered successfully!" };
+        }
+    } else {
+        // Handle non-200 responses (e.g., 400, 401, 500)
+        let errorData = {};
+        const contentType = res.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+            try {
+                errorData = await res.json();
+            } catch (err) {
+                // Failed to parse error JSON
+                throw new Error(`Server error (${res.status}): No valid error message.`);
+            }
+        }
+        throw new Error(errorData.message || `Server error: Status ${res.status}`);
     }
-
-    if (!res.ok) {
-      // Backend returned an error status
-      throw new Error(data.message || "Registration failed");
-    }
-
-    return data;
   })
   .then(data => {
     alert(data.message || "Registered successfully!");
@@ -76,3 +85,4 @@ function Register() {
     alert(err.message);
   });
 }
+

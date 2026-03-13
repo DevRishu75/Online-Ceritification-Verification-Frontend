@@ -12,13 +12,16 @@ function CreateCourse(){
             "Content-type":"application/json",
             "Authorization": "Bearer " + token
         },
-        body: JSON.stringify({title})
+        body: JSON.stringify({
+ title,
+ description: "Created by admin"
+})
     })
     .then(res=>res.json())
 .then(data=>{
-      JSON.stringify(data);
-    console.log(data)
-    document.getElementById("output").innerText = `course created with ID  = ${data._id}`
+console.log(data)
+document.getElementById("output").innerText =
+`course created with ID = ${data._id}`
 })
 .catch(err=>{
     console.error(err)

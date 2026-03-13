@@ -47,24 +47,14 @@ headers:{
 },
 body:JSON.stringify({name,email,password})
 })
-.then(async res=>{
-
-const text = await res.text();
-
-if(!text){
-throw new Error("Empty server response");
-}
-
-return JSON.parse(text);
-
-})
+.then(res=>res.json())
 .then(data=>{
-alert(data.message || "Registered successfully");
+alert(data.message);
 window.location.href="index.html";
 })
 .catch(err=>{
 console.error(err);
-alert("Registration failed. Try again.");
+alert("Registration failed");
 });
 
 }

@@ -35,24 +35,36 @@ function login() {
 }
 
 function Register(){
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
 
-  fetch("https://online-ceritification-verification.onrender.com/api/auth/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ name, email, password })
-  })
-  .then(res => res.json())   // directly read JSON
-  .then(data => {
-    alert(data.message || "Registered successfully");
-    window.location.href = "index.html";
-  })
-  .catch(err => {
-    console.error(err);
-    alert("Registration failed");
-  });
+const name = document.getElementById("name").value;
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+fetch("https://online-ceritification-verification.onrender.com/api/auth/register",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({name,email,password})
+})
+.then(async res=>{
+
+const text = await res.text();
+
+if(!text){
+throw new Error("Empty server response");
+}
+
+return JSON.parse(text);
+
+})
+.then(data=>{
+alert(data.message || "Registered successfully");
+window.location.href="index.html";
+})
+.catch(err=>{
+console.error(err);
+alert("Registration failed. Try again.");
+});
+
 }
